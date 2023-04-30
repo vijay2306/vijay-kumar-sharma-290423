@@ -1,10 +1,13 @@
 package com.avisys.com.services;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DuplicateKeyException;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
+import org.springframework.web.server.ResponseStatusException;
 
 import com.avisys.com.Customer;
 import com.avisys.com.repositries.CustomerRepository;
@@ -45,4 +48,16 @@ public class CustomerService {
         
         return true;
     }
+	
+	public void deleteCustomerByMobileNumber(String mobileNumber)
+	{
+		Customer c=crepo.findByMobileNumber(mobileNumber);
+		 if (c!=null) {
+			 System.out.println(c.getFirstName());
+         	crepo.delete(c);
+         	
+         } else {
+             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Customer not found");
+         }
+	}
 }

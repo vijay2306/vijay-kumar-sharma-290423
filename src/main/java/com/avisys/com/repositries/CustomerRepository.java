@@ -4,6 +4,7 @@
 package com.avisys.com.repositries;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
@@ -29,5 +30,7 @@ public interface CustomerRepository extends JpaRepository<Customer, Long> {
 	
 	 @Query("Select c FROM Customer c WHERE mobileNumber=:mobileNumber")
 	 public Customer findByMobileNumber(@Param("mobileNumber") String mobileNumber);
+	 
+	 
 	
 }
