@@ -27,4 +27,7 @@ public interface CustomerRepository extends JpaRepository<Customer, Long> {
 	 @Query("SELECT c FROM Customer c WHERE mobileNumber=:mobileNumber")
 	 public Customer findByExactMobileNumber(@Param("mobileNumber") String mobileNumber);
 	
+	 @Query("Select c FROM Customer c WHERE mobileNumber=:mobileNumber")
+	 public Customer findByMobileNumber(@Param("mobileNumber") String mobileNumber);
+	
 }
