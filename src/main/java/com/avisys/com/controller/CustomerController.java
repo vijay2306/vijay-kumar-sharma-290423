@@ -9,7 +9,9 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
@@ -65,8 +67,17 @@ public class CustomerController {
 	       @DeleteMapping("/deleteCustomerbymobileno") //deleting customer by mobile number
 	        public void deleteCustomerByMobileNumber(@RequestParam("mobileNumber") String mobileNumber) {
 	              cser.deleteCustomerByMobileNumber(mobileNumber);
-	            
+	       }
 	        
+	       @PutMapping("/updatecustomers/{id}")  // updating customer mobileno if customer id is already present
+		   public Customer updateCustomerMobileNumber(@PathVariable Long id, @RequestBody String newMobileNumber) {
+	    	   return cser.updateCustomerMobileNumber(id,newMobileNumber);
+	       }
+		                  
+	       @DeleteMapping("/deletecustomers/{id}/mobileNumber/{mobileNumber}") //deleting customer mobileno if customerid and mobile is already present
+	    	   public Customer deleteCustomerMobileNumber(@PathVariable Long id, @PathVariable String mobileNumber) {
+	    	       return  cser.deleteCustomerMobileNumber(id,mobileNumber);
+	    	      
 	       
 	 }
 }

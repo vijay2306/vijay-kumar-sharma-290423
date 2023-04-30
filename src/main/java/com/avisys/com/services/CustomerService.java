@@ -1,5 +1,6 @@
 package com.avisys.com.services;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -56,8 +57,48 @@ public class CustomerService {
 			 System.out.println(c.getFirstName());
          	crepo.delete(c);
          	
+         	
          } else {
              throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Customer not found");
          }
+	}
+	public Customer updateCustomerMobileNumber(Long id,String mobileNumber)
+	{
+		Optional<Customer> optionalCustomer = crepo.findById(id);
+        if (optionalCustomer.isPresent()) {
+            Customer customer = optionalCustomer.get();
+        String mobile = customer.getMobileNumber();
+        
+        
+            if (mobile.equals(mobileNumber)) {
+                throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Mobile number already exists");
+            }
+            customer.setMobileNumber(mobileNumber);
+            return crepo.save(customer);
+        } else {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Customer not found");
+        }
+       
+	}
+	
+	public Customer deleteCustomerMobileNumber(Long id,String mobileNumber)
+	{
+		 Optional<Customer> optionalCustomer = crepo.findById(id);
+		 if (optionalCustomer.isPresent()) {
+	           Customer customer = optionalCustomer.get();
+	           String mobile = customer.getMobileNumber();
+	           List<String> mobileNumbers=new ArrayList<>();
+	           mobileNumbers.add(mobile);
+	           if (mobileNumbers.contains(mobileNumber)) {
+	               mobileNumbers.remove(mobileNumber);
+	               String newmobile=mobileNumbers.toString();
+	               customer.setMobileNumber(newmobile);
+	               return crepo.save(customer);
+	           } else {
+	               throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Mobile number not found for customer");
+	           }
+	       } else {
+	           throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Customer not found");
+	       }
 	}
 }
